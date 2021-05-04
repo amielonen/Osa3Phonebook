@@ -1,6 +1,20 @@
 const express = require('express')
+const { token } = require('morgan')
 const app = express()
+const morgan = require('morgan')
+const cors = require('cors')
+app.use(cors())
+
 app.use(express.json())
+app.use(morgan('tiny'))
+morgan.token('entry', function(req, res)  {
+    if (req.method === 'POST') {
+        return JSON.stringify(req.body);
+    }
+})
+app.use(morgan
+    (':method :url :status :res[content-length] :response-time ms :entry'))
+
 
 let persons = [
     {
@@ -53,10 +67,9 @@ app.get('/info', (request, response) => {
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    persons = persons.filter(p => p.id =! id)
-
-    response.status(204).end()
+    const id = Number(request.params.id);
+    persons = persons.filter(person => person.id !== id);
+    response.status(204).end();
 })
 
 app.post('/api/persons', (request, response) => {
@@ -70,9 +83,8 @@ app.post('/api/persons', (request, response) => {
         return response.status(400).json({ error: 'number missing'})
     }
 
-    if (body.name === persons.map(p => {
-        return p.name
-    })) {
+    for (var i = 0; i < persons.length; i++) {
+        if (persons[i].name === body.name) 
         return response.status(400).json({ error: 'name taken'})
     }
 
@@ -89,7 +101,7 @@ app.post('/api/persons', (request, response) => {
 
 const generateID = () => {
     const maxID = persons.length > 0
-    ? Math.max(...persons(p => p.id))
+    ? Math.max(...persons.map(p => p.id))
     : 0
     return maxID+1
 }

@@ -18,7 +18,7 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFind
         },
         number: {
             type: String,
-            minlength: 6,
+            minlength: 8,
             required: true
         }
     })

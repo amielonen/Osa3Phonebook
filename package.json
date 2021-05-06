@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "lint": "eslint ."
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -21,6 +22,7 @@
   "author": "Antti Mielonen",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^7.25.0",
     "nodemon": "^2.0.7"
   }
 }
